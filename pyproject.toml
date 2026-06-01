@@ -1,0 +1,119 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "causalpol"
+version = "0.1.0"
+description = "Extracting and validating causal claims in policy documents using LLMs"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "CausalPol Contributors" }
+]
+keywords = [
+    "causal extraction",
+    "policy NLP",
+    "information extraction",
+    "multilingual NLP",
+    "large language models",
+    "regulatory analysis",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+]
+requires-python = ">=3.9"
+
+# Core dependencies (always installed)
+dependencies = [
+    "transformers>=4.38.0",
+    "torch>=2.0.0",
+    "openai>=1.12.0",
+    "tqdm>=4.66.0",
+]
+
+[project.optional-dependencies]
+# Full installation with all recommended extras
+full = [
+    "sentence-transformers>=2.6.0",
+    "spacy>=3.7.0",
+    "langdetect>=1.0.9",
+    "scikit-learn>=1.4.0",
+    "numpy>=1.26.0",
+]
+
+# Evaluation and benchmarking
+eval = [
+    "scikit-learn>=1.4.0",
+    "numpy>=1.26.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+]
+
+# Development and testing
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "black>=24.0.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "pre-commit>=3.6.0",
+]
+
+# Documentation
+docs = [
+    "sphinx>=7.2.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "myst-parser>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/causalpol/causalpol"
+Repository = "https://github.com/causalpol/causalpol"
+"Bug Tracker" = "https://github.com/causalpol/causalpol/issues"
+Documentation = "https://causalpol.readthedocs.io"
+
+[project.scripts]
+causalpol = "causalpol.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["causalpol*"]
+
+[tool.black]
+line-length = 90
+target-version = ["py39", "py310", "py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 90
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+markers = [
+    "slow: marks tests as slow (deselect with '-m not slow')",
+    "requires_gpu: marks tests that require a CUDA-capable GPU",
+    "requires_api: marks tests that require an OpenAI API key",
+]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
